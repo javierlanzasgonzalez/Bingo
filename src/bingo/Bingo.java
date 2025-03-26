@@ -11,5 +11,6 @@ public class Bingo {
 
     public static void main(String[] args) {
         GestionClientes.gestionClientes();
+        GestionClientes.agregarAlumno();
     }
 }
