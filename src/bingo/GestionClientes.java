@@ -177,6 +177,7 @@ public class GestionClientes {
                         System.out.println("Se va a modificar el cliente: " + linea);
                         String[] palabra = linea.split(" "); // Se crea un array con las palabras que
                         // tiene la linea para modificarlas despues
+                        Bingo.clearConsole();
                         Menu.menuModCliente();
                         System.out.print("Seleccione que dato desea modificar: ");
                         op = entrada.nextInt();
@@ -296,8 +297,9 @@ public class GestionClientes {
     /**
      * Metodo para buscar un cliente
      */
-    public static void buscarCliente() {
+    public static String buscarCliente() {
         Scanner entrada = new Scanner(System.in);
+        String linea = null;
         File fichero = new File("clientes.txt");
         // Si el fichero no existe muestra el mensaje
         if (!fichero.exists()) {
@@ -305,7 +307,7 @@ public class GestionClientes {
         } else {
             try {
                 BufferedReader leer = new BufferedReader(new FileReader(fichero));
-                String linea, codigo;
+                String codigo;
                 boolean encontrado = false;
                 codigo = introducirDNI(entrada);
                 while ((linea = leer.readLine()) != null) {
@@ -324,6 +326,7 @@ public class GestionClientes {
                 System.out.println("Ha ocurrido un error inesperado: " + e.getMessage());
             }
         }
+        return linea;
     }
 
     /**

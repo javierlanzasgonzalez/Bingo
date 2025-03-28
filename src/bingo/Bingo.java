@@ -45,6 +45,7 @@ public class Bingo {
                         GestionClientes.buscarCliente();
                     }
                     case 2 -> {
+                        clearConsole();
                         Menu.menuClientes();
                         System.out.print("Introduzca una opcion: ");
                         int op2 = entrada.nextInt();
