@@ -25,10 +25,10 @@ public class Bingo {
     }
 
     public static void clearConsole() {
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-}
-    
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
         int op = 0;
@@ -67,14 +67,12 @@ public class Bingo {
                         }
                     }
                     case 3 -> {
-                        JFrame ventana = new JFrame("Bingo");
-                        ventana.setSize(400, 200);
-                        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        ventana.setLocationRelativeTo(null);
-                        ventana.setVisible(true);
-
-                        // Mostrar créditos al final, por ejemplo:
-                        CreditosDialog.mostrar(ventana);
+                        JFrame frame = new JFrame("Créditos");
+                        frame.setSize(400, 300);
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.setLocationRelativeTo(null);
+                        frame.setVisible(false); // o true si quieres ver algo
+                        CreditosDialog.mostrar(frame);
                     }
                     case 4 ->
                         System.out.println("Se va a cerrar el programa");
