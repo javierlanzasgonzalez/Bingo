@@ -339,7 +339,7 @@ public class GestionClientes {
                 BufferedReader leer = new BufferedReader(new FileReader(fichero));
                 String linea;
                 // Se listan todos los clientes del fichero
-                System.out.println("----- LISTADO DE ALUMNOS -----------------------------------------");
+                System.out.println("----- LISTADO DE CLIENTES -----------------------------------------");
                 while ((linea = leer.readLine()) != null) {
                     System.out.println(linea);
                 }

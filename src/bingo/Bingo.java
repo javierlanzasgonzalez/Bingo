@@ -1,5 +1,6 @@
 package bingo;
 
+import java.awt.HeadlessException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JFrame;
@@ -26,9 +27,6 @@ public class Bingo {
     public static void clearConsole() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
-    
-    
-    Scanner scanner = new Scanner(System.in);
 }
     
     public static void main(String[] args) {
@@ -44,7 +42,7 @@ public class Bingo {
                 switch (op) { // Switch con las opciones del menu
                     case 1 -> {
                         jugarBingo();
-//                        GestionClientes.buscarCliente();
+                        GestionClientes.buscarCliente();
                     }
                     case 2 -> {
                         Menu.menuClientes();
@@ -86,9 +84,9 @@ public class Bingo {
             } catch (InputMismatchException e) {
                 System.out.println("Error. Debe introducir un numero.\n");
                 entrada.nextLine();
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 System.out.println("Ha ocurrido un error inesperado" + e.getMessage());
             }
-        } while (op != 6);
+        } while (op != 4);
     }
 }

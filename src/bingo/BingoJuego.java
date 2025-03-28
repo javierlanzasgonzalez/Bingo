@@ -32,5 +32,4 @@ public class BingoJuego {
     public BingoCarton getCarton() {
         return carton;
     }
-
 }

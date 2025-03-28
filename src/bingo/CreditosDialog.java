@@ -39,17 +39,18 @@ public class CreditosDialog extends JWindow {
 
         // Texto completo
         String textoCreditos = """
-                🎉 Créditos del Bingo 🎉
+                         🎉 Créditos del Bingo 🎉
 
-                Este programa ha sido desarrollado con
+                   Este programa ha sido desarrollado con
                 ilusión, esfuerzo y muchas ganas de aprender
-                por:
+                
+                Trabajo realizado por:
 
-                👨‍💻  Javier Lanzas González
-                👨‍💻  Samuel Donato Muñoz Povedano
+                          Javier Lanzas González
+                        Samuel Donato Muñoz Povedano
 
-                ¡Gracias por jugar!
-                ¡Buena suerte y que cante línea el mejor! 🏆
+                            ¡Gracias por jugar!
+                ¡Buena suerte y que cante bingo el mejor! 🏆
                 """;
 
         // Calcular tamaño según el texto
