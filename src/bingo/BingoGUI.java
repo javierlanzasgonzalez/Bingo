@@ -14,7 +14,7 @@ public class BingoGUI extends JDialog {
     private final JLabel[][] etiquetasCarton;
     private final JLabel lblNumero;
     private final JButton btnSacarNumero;
-
+    
     public BingoGUI(Window parent, BingoJuego juego, String[] cliente) {
         super(parent, ("Cliente: "+cliente[1]+" "+cliente[2]+" "+cliente[3]), ModalityType.APPLICATION_MODAL);
         this.juego = juego;
@@ -83,6 +83,7 @@ public class BingoGUI extends JDialog {
                 if (juego.getCarton().verificarBingo()) {
                     JOptionPane.showMessageDialog(BingoGUI.this, "¡BINGO! Has ganado");
                     btnSacarNumero.setEnabled(false);
+                    GestionClientes.modificarVictorias(cliente[0]);
                 }
             }
         });

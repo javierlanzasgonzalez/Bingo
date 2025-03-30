@@ -19,7 +19,7 @@ public class Bingo {
         SwingUtilities.invokeLater(() -> {
             BingoCarton carton = new BingoCarton();
             BingoJuego juego = new BingoJuego(carton);
-            BingoGUI gui = new BingoGUI(null, juego,cliente); // null porque vienes desde consola
+            BingoGUI gui = new BingoGUI(null, juego, cliente); // null porque vienes desde consola
             gui.setVisible(true); // Modal: pausa hasta cerrar
         });
     }
@@ -41,8 +41,11 @@ public class Bingo {
                 entrada.nextLine();
                 switch (op) { // Switch con las opciones del menu
                     case 1 -> {
-                        String[] cliente=GestionClientes.buscarCliente().split("\\s+");
-                        jugarBingo(cliente);
+                        String usuario = GestionClientes.buscarCliente();
+                        if (usuario != null) {
+                            String[] cliente = usuario.split("\\s+");
+                            jugarBingo(cliente);
+                        }
                     }
                     case 2 -> {
                         clearConsole();

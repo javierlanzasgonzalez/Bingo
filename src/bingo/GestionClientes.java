@@ -138,7 +138,7 @@ public class GestionClientes {
                     fecha = introducirFecha(entrada);
                     // Escribe el fichero concatenado las variables. 
                     escribir.write(codigo + " " + nombre + " " + apellido1 + " " + apellido2
-                            + " " + fecha + "\n");
+                            + " " + fecha + " 0\n");
                     // Se cierra el fichero
                     escribir.close();
                     System.out.println("El cliente se ha creado correctamente");
@@ -148,6 +148,64 @@ public class GestionClientes {
             } catch (IOException e) {
                 System.out.println("Ha ocurrido un error inesperado: " + e.getMessage());
             }
+        }
+    }
+
+    /**
+     * Metodo para modificar un losbingos ganados
+     */
+    public static void modificarVictorias(String codigo) {
+        File fichero = new File("clientes.txt");
+        File temp = new File("temporal.txt");
+
+        if (!fichero.exists()) {
+            System.out.println("El fichero no existe");
+            return;
+        }
+
+        try {
+            BufferedReader leer = new BufferedReader(new FileReader(fichero));
+            BufferedWriter escribir = new BufferedWriter(new FileWriter(temp));
+
+            String linea;
+            boolean cambios = false;
+            boolean encontrado = false;
+
+            while ((linea = leer.readLine()) != null) {
+                if (linea.startsWith(codigo)) {
+                    encontrado = true;
+                    
+                    String[] palabra = linea.split(" ");
+                    int victorias = Integer.parseInt(palabra[5]);
+                    victorias++;
+                    palabra[5] = Integer.toString(victorias);
+
+                    escribir.write(String.join(" ", palabra) + "\n");
+                    cambios = true;
+                } 
+                else {
+                    escribir.write(linea + "\n"); // Escribe las líneas sin modificar
+                }
+            }
+            leer.close();
+            escribir.close();
+
+            if (cambios) {
+                if (fichero.delete() && temp.renameTo(fichero)) {} 
+                else {
+                    System.out.println("Error al modificar los datos.");
+                }
+            }
+            else {
+                temp.delete();
+            }
+            if (!encontrado) {
+                System.out.println("No se ha encontrado el cliente");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error: El formato del número de victorias no es válido.");
+        } catch (IOException e) {
+            System.out.println("Ha ocurrido un error inesperado: " + e.getMessage());
         }
     }
 
@@ -314,7 +372,7 @@ public class GestionClientes {
                     if (linea.startsWith(codigo)) // Si se encuentra el cliente se muestran los datos del mismo
                     {
                         encontrado = true;
-                        cliente=linea;
+                        cliente = linea;
                         System.out.println("\nCliente: " + linea + "\n");
                     }
                 }
@@ -354,5 +412,5 @@ public class GestionClientes {
                 System.out.println("Ha ocurrido un error inesperado: " + e.getMessage());
             }
         }
-    } 
+    }
 }
