@@ -15,11 +15,11 @@ import javax.swing.SwingUtilities;
  */
 public class Bingo {
 
-    public static void jugarBingo() {
+    public static void jugarBingo(String[] cliente) {
         SwingUtilities.invokeLater(() -> {
             BingoCarton carton = new BingoCarton();
             BingoJuego juego = new BingoJuego(carton);
-            BingoGUI gui = new BingoGUI(null, juego); // null porque vienes desde consola
+            BingoGUI gui = new BingoGUI(null, juego,cliente); // null porque vienes desde consola
             gui.setVisible(true); // Modal: pausa hasta cerrar
         });
     }
@@ -41,8 +41,8 @@ public class Bingo {
                 entrada.nextLine();
                 switch (op) { // Switch con las opciones del menu
                     case 1 -> {
-                        jugarBingo();
-                        GestionClientes.buscarCliente();
+                        String[] cliente=GestionClientes.buscarCliente().split("\\s+");
+                        jugarBingo(cliente);
                     }
                     case 2 -> {
                         clearConsole();

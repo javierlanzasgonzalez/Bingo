@@ -15,8 +15,8 @@ public class BingoGUI extends JDialog {
     private final JLabel lblNumero;
     private final JButton btnSacarNumero;
 
-    public BingoGUI(Window parent, BingoJuego juego) {
-        super(parent, "Juego de Bingo", ModalityType.APPLICATION_MODAL);
+    public BingoGUI(Window parent, BingoJuego juego, String[] cliente) {
+        super(parent, ("Cliente: "+cliente[1]+" "+cliente[2]+" "+cliente[3]), ModalityType.APPLICATION_MODAL);
         this.juego = juego;
         etiquetasCarton = new JLabel[3][9];
 

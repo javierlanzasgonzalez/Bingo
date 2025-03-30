@@ -299,7 +299,7 @@ public class GestionClientes {
      */
     public static String buscarCliente() {
         Scanner entrada = new Scanner(System.in);
-        String linea = null;
+        String linea, cliente = null;
         File fichero = new File("clientes.txt");
         // Si el fichero no existe muestra el mensaje
         if (!fichero.exists()) {
@@ -314,7 +314,8 @@ public class GestionClientes {
                     if (linea.startsWith(codigo)) // Si se encuentra el cliente se muestran los datos del mismo
                     {
                         encontrado = true;
-                        System.out.println("\nAlumno: " + linea + "\n");
+                        cliente=linea;
+                        System.out.println("\nCliente: " + linea + "\n");
                     }
                 }
                 // Cierre del fichero
@@ -326,7 +327,7 @@ public class GestionClientes {
                 System.out.println("Ha ocurrido un error inesperado: " + e.getMessage());
             }
         }
-        return linea;
+        return cliente;
     }
 
     /**
