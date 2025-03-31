@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class GestionClientes {
 
     /**
-     * Funcion recursiva para introducir el DNI del cliente verificando que sea un formato correcto
+     * Funcion recursiva para introducir el DNI del cliente verificando que sea
+     * un formato correcto
      *
      * @param entrada
      * @return codigo
@@ -362,6 +363,7 @@ public class GestionClientes {
             try {
                 BufferedReader leer = new BufferedReader(new FileReader(fichero));
                 String codigo;
+                String[] listado;
                 boolean encontrado = false;
                 codigo = introducirDNI(entrada);
                 while ((linea = leer.readLine()) != null) {
@@ -369,7 +371,26 @@ public class GestionClientes {
                     {
                         encontrado = true;
                         cliente = linea;
-                        System.out.println("\nCliente: " + linea + "\n");
+                        // Se listan todos los clientes del fichero
+                        System.out.println("----- LISTADO DE CLIENTES -----------------------------------------\n");
+                        System.out.printf("%-15s %-15s %-20s %-20s %-15s\n",
+                                "DNI", "Nombre", "Apellidos", "Fecha de Nacimiento", "Partidas Ganadas");
+
+                        listado = linea.split(" ");
+
+                        String dni = listado[0];
+                        String nombre = listado[1];
+                        String apellido1 = listado[2];
+                        String apellido2 = listado[3];
+                        String fechaNacimiento = listado[4];
+                        String partidasGanadas = listado[5];
+
+                        String apellidos = apellido1 + " " + apellido2;
+
+                        System.out.printf("%-15s %-15s %-20s %-27s %-15s\n",
+                                dni, nombre, apellidos, fechaNacimiento, partidasGanadas);
+
+                        System.out.println("------------------------------------------------------------------");
                     }
                 }
                 // Cierre del fichero
