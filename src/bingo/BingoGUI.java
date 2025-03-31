@@ -13,9 +13,9 @@ public class BingoGUI extends JDialog {
     private final JLabel[][] etiquetasCarton;
     private final JLabel lblNumero;
     private final JButton btnSacarNumero;
-    
+
     public BingoGUI(Window parent, BingoJuego juego, String[] cliente) {
-        super(parent, ("Cliente: "+cliente[1]+" "+cliente[2]+" "+cliente[3]), ModalityType.APPLICATION_MODAL);
+        super(parent, ("Cliente: " + cliente[1] + " " + cliente[2] + " " + cliente[3]), ModalityType.APPLICATION_MODAL);
         this.juego = juego;
         etiquetasCarton = new JLabel[3][9];
 
@@ -39,7 +39,7 @@ public class BingoGUI extends JDialog {
                     etiquetasCarton[fila][col].setOpaque(true);
                 } else {
                     etiquetasCarton[fila][col] = new JLabel(String.valueOf(carton[fila][col]), SwingConstants.CENTER);
-                    etiquetasCarton[fila][col].setFont(new Font("Arial", Font.BOLD, 30));
+                    etiquetasCarton[fila][col].setFont(new Font("Ubuntu Mono", Font.BOLD, 30));
                     etiquetasCarton[fila][col].setForeground(new Color(1, 100, 60));
                     etiquetasCarton[fila][col].setOpaque(true);
                     etiquetasCarton[fila][col].setBackground(new Color(255, 255, 255));
@@ -62,7 +62,7 @@ public class BingoGUI extends JDialog {
         // Panel para mostrar el número sacado
         JPanel panelNumero = new JPanel();
         lblNumero = new JLabel("Presiona 'Sacar Número'", SwingConstants.CENTER);
-        lblNumero.setFont(new Font("Arial", Font.BOLD, 20));
+        lblNumero.setFont(new Font("Ubuntu Mono", Font.BOLD, 20));
         panelNumero.add(lblNumero);
 
         // Botón para sacar números
@@ -71,13 +71,13 @@ public class BingoGUI extends JDialog {
             int numero = juego.sacarNumero();
             lblNumero.setText("Número: " + numero);
             actualizarCarton();
-            
+
             if (juego.getCarton().verificarPrimeraLinea()) {
                 JOptionPane.showMessageDialog(BingoGUI.this, "¡Has hecho línea! 🎉");
             }
-            
+
             if (juego.getCarton().verificarBingo()) {
-                JOptionPane.showMessageDialog(BingoGUI.this, "¡BINGO! Has ganado");
+                mostrarVentanaGanador();
                 btnSacarNumero.setEnabled(false);
                 GestionClientes.modificarVictorias(cliente[0]);
             }
@@ -102,5 +102,27 @@ public class BingoGUI extends JDialog {
                 }
             }
         }
+    }
+
+    private void mostrarVentanaGanador() {
+        JDialog dialogo = new JDialog(this, "¡BINGO!", true);
+        dialogo.setLayout(new BorderLayout());
+
+        JLabel mensaje = new JLabel("¡BINGO! Has ganado 🎉", SwingConstants.CENTER);
+        mensaje.setFont(new Font("Ubuntu Mono", Font.BOLD, 24));
+        mensaje.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Cargar el GIF animado
+        ImageIcon gif = new ImageIcon(getClass().getResource("/bingo/bingo.gif"));
+        JLabel imagen = new JLabel(gif, SwingConstants.CENTER);
+
+        dialogo.add(mensaje, BorderLayout.NORTH);
+        dialogo.add(imagen, BorderLayout.CENTER);
+
+        // Tamaño y posición
+        dialogo.pack();
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialogo.setVisible(true);
     }
 }
