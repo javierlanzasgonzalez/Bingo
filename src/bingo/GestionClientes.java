@@ -151,7 +151,7 @@ public class GestionClientes {
     }
 
     /**
-     * Metodo para modificar un losbingos ganados
+     * Metodo para modificar un los bingos ganados
      */
     public static void modificarVictorias(String codigo) {
         File fichero = new File("clientes.txt");

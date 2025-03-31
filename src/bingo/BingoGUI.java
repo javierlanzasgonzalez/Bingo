@@ -55,7 +55,6 @@ public class BingoGUI extends JDialog {
 
                 // Asignar el borde a la celda
                 etiquetasCarton[fila][col].setBorder(bordeCompuesto);
-//                etiquetasCarton[fila][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 panelCarton.add(etiquetasCarton[fila][col]);
             }
         }

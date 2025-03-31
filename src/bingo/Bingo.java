@@ -28,6 +28,12 @@ public class Bingo {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+    
+    public static void systemPause() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Presiona Enter para continuar...");
+        scanner.nextLine(); // Espera a que el usuario presione Enter
+    }
 
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
@@ -42,10 +48,12 @@ public class Bingo {
                 switch (op) { // Switch con las opciones del menu
                     case 1 -> {
                         String usuario = GestionClientes.buscarCliente();
+                        
                         if (usuario != null) {
                             String[] cliente = usuario.split("\\s+");
                             jugarBingo(cliente);
                         }
+                        systemPause();
                     }
                     case 2 -> {
                         clearConsole();
@@ -54,20 +62,32 @@ public class Bingo {
                         int op2 = entrada.nextInt();
                         entrada.nextLine();
                         switch (op2) { // Switch con las opciones del menu
-                            case 1 ->
+                            case 1 -> {
                                 GestionClientes.agregarCliente();// Agrega clientes
-                            case 2 ->
+                                systemPause();
+                            }
+                            case 2 -> {
                                 GestionClientes.buscarCliente();// Busca clientes
-                            case 3 ->
+                                systemPause();
+                            }
+                            case 3 -> {
                                 GestionClientes.modificarcliente();// Modifica clientes
-                            case 4 ->
+                                systemPause();
+                            }
+                            case 4 -> {
                                 GestionClientes.eliminarCliente();// Elimina clientes
-                            case 5 ->
+                                systemPause();
+                            }
+                            case 5 -> {
                                 GestionClientes.mostrarClientes();// Mostrar clientes
+                                systemPause();
+                            }
                             case 6 -> {
                             }
-                            default ->
+                            default -> {
                                 System.out.println("Opcion no valida, debe introducir una opcion de la lista");
+                                systemPause();
+                            }
                         }
                     }
                     case 3 -> {
@@ -80,14 +100,18 @@ public class Bingo {
                     }
                     case 4 ->
                         System.out.println("Se va a cerrar el programa");
-                    default ->
+                    default -> {
                         System.out.println("Opcion no valida, debe introducir una opcion de la lista");
+                        systemPause();
+                    }
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Error. Debe introducir un numero.\n");
+                systemPause();
                 entrada.nextLine();
             } catch (HeadlessException e) {
                 System.out.println("Ha ocurrido un error inesperado" + e.getMessage());
+                systemPause();
             }
         } while (op != 4);
     }
