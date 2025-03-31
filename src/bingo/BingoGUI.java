@@ -3,7 +3,6 @@ package bingo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
@@ -69,22 +68,19 @@ public class BingoGUI extends JDialog {
 
         // Botón para sacar números
         btnSacarNumero = new JButton("Sacar Número");
-        btnSacarNumero.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int numero = juego.sacarNumero();
-                lblNumero.setText("Número: " + numero);
-                actualizarCarton();
-
-                if (juego.getCarton().verificarPrimeraLinea()) {
-                    JOptionPane.showMessageDialog(BingoGUI.this, "¡Has hecho línea! 🎉");
-                }
-
-                if (juego.getCarton().verificarBingo()) {
-                    JOptionPane.showMessageDialog(BingoGUI.this, "¡BINGO! Has ganado");
-                    btnSacarNumero.setEnabled(false);
-                    GestionClientes.modificarVictorias(cliente[0]);
-                }
+        btnSacarNumero.addActionListener((ActionEvent e) -> {
+            int numero = juego.sacarNumero();
+            lblNumero.setText("Número: " + numero);
+            actualizarCarton();
+            
+            if (juego.getCarton().verificarPrimeraLinea()) {
+                JOptionPane.showMessageDialog(BingoGUI.this, "¡Has hecho línea! 🎉");
+            }
+            
+            if (juego.getCarton().verificarBingo()) {
+                JOptionPane.showMessageDialog(BingoGUI.this, "¡BINGO! Has ganado");
+                btnSacarNumero.setEnabled(false);
+                GestionClientes.modificarVictorias(cliente[0]);
             }
         });
 

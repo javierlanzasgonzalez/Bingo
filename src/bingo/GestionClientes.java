@@ -3,23 +3,21 @@ package bingo;
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 public class GestionClientes {
 
     /**
-     * Funcion recursiva para introducir el DNI del cliente verificando que sea
-     * un formato correcto
+     * Funcion recursiva para introducir el DNI del cliente verificando que sea un formato correcto
      *
      * @param entrada
      * @return codigo
      */
     public static String introducirDNI(Scanner entrada) {
-        String codigo;
+        String codigo, input;
         System.out.print("Introduzca el DNI del cliente: ");
-        codigo = entrada.nextLine();
-        if (codigo.matches("\\d{8}+([a-z]|[A-Z])")) {
+        input = entrada.nextLine();
+        codigo = input.toUpperCase();
+        if (codigo.matches("\\d{8}+[A-Z]")) {
             return codigo;
         }
         System.out.println("El DNI debe tener 8 digitos y 1 letra");
@@ -174,7 +172,7 @@ public class GestionClientes {
             while ((linea = leer.readLine()) != null) {
                 if (linea.startsWith(codigo)) {
                     encontrado = true;
-                    
+
                     String[] palabra = linea.split(" ");
                     int victorias = Integer.parseInt(palabra[5]);
                     victorias++;
@@ -182,8 +180,7 @@ public class GestionClientes {
 
                     escribir.write(String.join(" ", palabra) + "\n");
                     cambios = true;
-                } 
-                else {
+                } else {
                     escribir.write(linea + "\n"); // Escribe las líneas sin modificar
                 }
             }
@@ -191,12 +188,11 @@ public class GestionClientes {
             escribir.close();
 
             if (cambios) {
-                if (fichero.delete() && temp.renameTo(fichero)) {} 
-                else {
+                if (fichero.delete() && temp.renameTo(fichero)) {
+                } else {
                     System.out.println("Error al modificar los datos.");
                 }
-            }
-            else {
+            } else {
                 temp.delete();
             }
             if (!encontrado) {
@@ -400,10 +396,26 @@ public class GestionClientes {
             try {
                 BufferedReader leer = new BufferedReader(new FileReader(fichero));
                 String linea;
+                String[] listado;
                 // Se listan todos los clientes del fichero
-                System.out.println("----- LISTADO DE CLIENTES -----------------------------------------");
+                System.out.println("----- LISTADO DE CLIENTES -----------------------------------------\n");
+                System.out.printf("%-15s %-15s %-20s %-20s %-15s\n",
+                        "DNI", "Nombre", "Apellidos", "Fecha de Nacimiento", "Partidas Ganadas");
+
                 while ((linea = leer.readLine()) != null) {
-                    System.out.println(linea);
+                    listado = linea.split(" ");
+
+                    String dni = listado[0];
+                    String nombre = listado[1];
+                    String apellido1 = listado[2];
+                    String apellido2 = listado[3];
+                    String fechaNacimiento = listado[4];
+                    String partidasGanadas = listado[5];
+
+                    String apellidos = apellido1 + " " + apellido2;
+
+                    System.out.printf("%-15s %-15s %-20s %-27s %-15s\n",
+                            dni, nombre, apellidos, fechaNacimiento, partidasGanadas);
                 }
                 System.out.println("------------------------------------------------------------------");
                 // Cierre del archivo
