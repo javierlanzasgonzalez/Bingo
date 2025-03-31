@@ -48,6 +48,7 @@ public class Bingo {
 
     /**
      * Método principal del programa. Muestra un menú interactivo en consola para gestionar el bingo.
+     * @param args
      */
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
