@@ -69,10 +69,11 @@ public class Bingo {
                 switch (op) {
                     case 1 -> {
                         // Jugar al bingo
-                        String usuario = GestionClientes.buscarCliente(); // Buscar cliente
+                        String usuario = Database1.SQLBuscarClientes(); // Buscar cliente
 
                         if (usuario != null) {
-                            String[] cliente = usuario.split("\\s+");     // Dividir datos del cliente por espacios
+                            String[] cliente=usuario.split("\\s+");
+                                 // Dividir datos del cliente por espacios
                             jugarBingo(cliente);                          // Iniciar juego
                         }
                         systemPause(); // Espera después de jugar
@@ -126,7 +127,7 @@ public class Bingo {
                         CreditosDialog.mostrar(frame); // Mostrar diálogo de créditos
                     }
                     case 4 -> {
-                        Database.SQLMostrarClientes();  // Test SQL
+                        Database1.SQLmodificarVictorias(Database1.SQLBuscarClientes());  // Test SQL
                         systemPause();
                     }
                     case 5 -> {

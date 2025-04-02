@@ -3,6 +3,9 @@ package bingo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
@@ -13,9 +16,9 @@ public class BingoGUI extends JDialog {
     private final JLabel[][] etiquetasCarton;
     private final JLabel lblNumero;
     private final JButton btnSacarNumero;
-
     public BingoGUI(Window parent, BingoJuego juego, String[] cliente) {
-        super(parent, ("Cliente: " + cliente[1] + " " + cliente[2] + " " + cliente[3]), ModalityType.APPLICATION_MODAL);
+
+        super(parent, ("Cliente: "+ cliente[1] + " " + cliente[2] + " " + cliente[3] ), ModalityType.APPLICATION_MODAL);
         this.juego = juego;
         etiquetasCarton = new JLabel[3][9];
 
@@ -79,7 +82,11 @@ public class BingoGUI extends JDialog {
             if (juego.getCarton().verificarBingo()) {
                 mostrarVentanaGanador();
                 btnSacarNumero.setEnabled(false);
-                GestionClientes.modificarVictorias(cliente[0]);
+                try {
+                    Database1.SQLmodificarVictorias(cliente[0]);
+                } catch (SQLException ex) {
+                    Logger.getLogger(BingoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
