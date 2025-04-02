@@ -126,7 +126,7 @@ public class Bingo {
                         CreditosDialog.mostrar(frame); // Mostrar diálogo de créditos
                     }
                     case 4 -> {
-                        Database.SQL();       // Test SQL
+                        Database.SQLMostrarClientes();  // Test SQL
                         systemPause();
                     }
                     case 5 -> {

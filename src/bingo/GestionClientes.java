@@ -152,6 +152,7 @@ public class GestionClientes {
 
     /**
      * Metodo para modificar un los bingos ganados
+     * @param codigo
      */
     public static void modificarVictorias(String codigo) {
         File fichero = new File("clientes.txt");
@@ -161,7 +162,6 @@ public class GestionClientes {
             System.out.println("El fichero no existe");
             return;
         }
-
         try {
             BufferedReader leer = new BufferedReader(new FileReader(fichero));
             BufferedWriter escribir = new BufferedWriter(new FileWriter(temp));
