@@ -83,7 +83,7 @@ public class BingoGUI extends JDialog {
                 mostrarVentanaGanador();
                 btnSacarNumero.setEnabled(false);
                 try {
-                    Database1.SQLmodificarVictorias(cliente[0]);
+                    Database.SQLmodificarVictorias(cliente[0]);
                 } catch (SQLException ex) {
                     Logger.getLogger(BingoGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
