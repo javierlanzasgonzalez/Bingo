@@ -20,7 +20,8 @@ public class Menu {
         System.out.println("||               1. Jugar Bingo                  ||");
         System.out.println("||               2. Gestionar clientes           ||");
         System.out.println("||               3. Créditos                     ||");
-        System.out.println("||               4. Salir                        ||");
+        System.out.println("||               4. SQL                          ||");
+        System.out.println("||               5. Salir                        ||");
         System.out.println("||                                               ||");
         System.out.println("===================================================");
     }

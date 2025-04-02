@@ -1,6 +1,7 @@
 package bingo;
 
 import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JFrame;
@@ -16,8 +17,8 @@ import javax.swing.SwingUtilities;
 public class Bingo {
 
     /**
-     * Inicia el juego del Bingo con un cliente dado.
-     * Lanza la interfaz gráfica en el hilo de eventos de Swing.
+     * Inicia el juego del Bingo con un cliente dado. Lanza la interfaz gráfica en el hilo de eventos de Swing.
+     *
      * @param cliente Array de Strings con la información del cliente.
      */
     public static void jugarBingo(String[] cliente) {
@@ -48,9 +49,11 @@ public class Bingo {
 
     /**
      * Método principal del programa. Muestra un menú interactivo en consola para gestionar el bingo.
+     *
      * @param args
+     * @throws java.sql.SQLException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner entrada = new Scanner(System.in);
         int op = 0;
 
@@ -123,6 +126,10 @@ public class Bingo {
                         CreditosDialog.mostrar(frame); // Mostrar diálogo de créditos
                     }
                     case 4 -> {
+                        Database.SQL();       // Test SQL
+                        systemPause();
+                    }
+                    case 5 -> {
                         // Salir del programa
                         System.out.println("Se va a cerrar el programa");
                     }
@@ -144,6 +151,6 @@ public class Bingo {
                 systemPause();
             }
 
-        } while (op != 4); // Sale cuando el usuario elige la opción 4
+        } while (op != 5); // Sale cuando el usuario elige la opción 4
     }
 }
