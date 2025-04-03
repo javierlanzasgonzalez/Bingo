@@ -1,6 +1,5 @@
 package bingo;
 
-import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
