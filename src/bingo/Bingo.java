@@ -1,6 +1,7 @@
 package bingo;
 
 import java.awt.HeadlessException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Javier Lanzas Gonzalez
  * @author Samuel Donato Muñoz Povedano
- * @version 1.0
+ * @version 1.1
  */
 public class Bingo {
 
@@ -23,7 +24,7 @@ public class Bingo {
      */
     public static void jugarBingo(String[] cliente) {
         SwingUtilities.invokeLater(() -> {
-            BingoCarton carton = new BingoCarton();                 // Crear un nuevo cartón
+            BingoCarton carton = new BingoCarton();                // Crear un nuevo cartón
             BingoJuego juego = new BingoJuego(carton);             // Crear un nuevo juego con ese cartón
             BingoGUI gui = new BingoGUI(null, juego, cliente);     // Crear la interfaz gráfica
             gui.setVisible(true);                                  // Mostrar interfaz (bloquea hasta cerrarla)
@@ -34,9 +35,17 @@ public class Bingo {
      * Limpia la consola
      */
     public static void clearConsole() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    try {
+        if (System.getProperty("os.name").contains("Windows")) {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } else {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
+    } catch (IOException | InterruptedException e) {
+        System.out.println("No se pudo limpiar la pantalla.");
     }
+}
 
     /**
      * Pausa el sistema hasta que el usuario presione Enter.
@@ -69,11 +78,10 @@ public class Bingo {
                 switch (op) {
                     case 1 -> {
                         // Jugar al bingo
-                        String usuario = Database.SQLBuscarClientes(); // Buscar cliente
+                        String usuario = Database.SQLBuscarCliente(); // Buscar cliente
 
                         if (usuario != null) {
-                            String[] cliente=usuario.split("\\s+");
-                                 // Dividir datos del cliente por espacios
+                            String[] cliente = usuario.split("\\s+");     // Dividir datos del cliente por espacios
                             jugarBingo(cliente);                          // Iniciar juego
                         }
                         systemPause(); // Espera después de jugar
@@ -88,23 +96,23 @@ public class Bingo {
 
                         switch (op2) {
                             case 1 -> {
-                                GestionClientes.agregarCliente();        // Añadir cliente
+                                Database.SQLAgregarCliente();        // Añadir cliente
                                 systemPause();
                             }
                             case 2 -> {
-                                GestionClientes.buscarCliente();         // Buscar cliente
+                                Database.SQLBuscarCliente();         // Buscar cliente
                                 systemPause();
                             }
                             case 3 -> {
-                                GestionClientes.modificarcliente();      // Modificar cliente
+                                GestionClientes.modificarcliente();  // Modificar cliente
                                 systemPause();
                             }
                             case 4 -> {
-                                GestionClientes.eliminarCliente();       // Eliminar cliente
+                                Database.SQLEliminarCliente();       // Eliminar cliente
                                 systemPause();
                             }
                             case 5 -> {
-                                GestionClientes.mostrarClientes();       // Mostrar todos los clientes
+                                Database.SQLMostrarClientes();       // Mostrar todos los clientes
                                 systemPause();
                             }
                             case 6 -> {
@@ -127,10 +135,6 @@ public class Bingo {
                         CreditosDialog.mostrar(frame); // Mostrar diálogo de créditos
                     }
                     case 4 -> {
-                        Database.SQLmodificarVictorias(Database.SQLBuscarClientes());  // Test SQL
-                        systemPause();
-                    }
-                    case 5 -> {
                         // Salir del programa
                         System.out.println("Se va a cerrar el programa");
                     }
@@ -152,6 +156,6 @@ public class Bingo {
                 systemPause();
             }
 
-        } while (op != 5); // Sale cuando el usuario elige la opción 4
+        } while (op != 4); // Sale cuando el usuario elige la opción 4
     }
 }
