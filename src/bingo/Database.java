@@ -1,5 +1,6 @@
 package bingo;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -221,54 +222,63 @@ public class Database {
                         Bingo.clearConsole();
                         Menu.menuModCliente();
                         ResultSet resultado = stmt.executeQuery();
-                        encontrado = true;
-                        System.out.println("\n----- CLIENTE ----------------------------------------------------------------------------------\n");
-                        System.out.printf("%-15s %-15s %-20s %-20s %-15s\n",
-                                "DNI", "Nombre", "Apellidos", "Fecha de Nacimiento", "Partidas Ganadas");
-                        System.out.printf("%-15s %-15s %-20s %-20s %-15s\n",
-                                "---", "------", "---------", "-------------------", "----------------\n");
-                        while (resultado.next()) {
+                        if (resultado.next()) {
+
                             String dni = resultado.getString(1);
                             String nombre = resultado.getString(2);
                             String apellido1 = resultado.getString(3);
                             String apellido2 = resultado.getString(4);
                             String fechaNacimiento = resultado.getString(5);
-                            String partidasGanadas = resultado.getString(6);
+                            String dniViejo = resultado.getString(1);
+                            encontrado = true;
+
+                            System.out.println("\n----- CLIENTE ----------------------------------------------------------------------------------\n");
+                            System.out.printf("%-15s %-15s %-20s %-20s\n",
+                                    "DNI", "Nombre", "Apellidos", "Fecha de Nacimiento");
+                            System.out.printf("%-15s %-15s %-20s %-20s\n",
+                                    "---", "------", "---------", "-------------------\n");
                             String apellidos = apellido1 + " " + apellido2;
-                            cliente = dni + " " + nombre + " " + apellidos + " " + fechaNacimiento + " " + partidasGanadas;
-                            System.out.printf("%-15s %-15s %-20s %-20s %-15s\n",
-                                    dni, nombre, apellidos, fechaNacimiento, partidasGanadas);
-                        }
-                        System.out.println("\n------------------------------------------------------------------------------------------------\n");
-                        System.out.print("Seleccione que dato desea modificar: ");
-                        int op = entrada.nextInt();
-                        entrada.nextLine();
-                        stmt = conexion.prepareStatement("UPDATE clientes SET dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, fecha = ? WHERE dni = ?");
-                        switch (op) {
-                            // Cada menu se utiliza para introducir el valor nuevo al cliente
-                            case 1 ->
-                                stmt.setString(1, GestionClientes.introducirDNI(entrada));
-                            case 2 ->
-                                stmt.setString(2, GestionClientes.introducirNombre(entrada));
-                            case 3 ->
-                                stmt.setString(3, GestionClientes.introducirApellido1(entrada));
-                            case 4 ->
-                                stmt.setString(4, GestionClientes.introducirApellido2(entrada));
-                            case 5 ->
-                                stmt.setString(5, GestionClientes.introducirFecha(entrada));
-                            case 6 -> {
-                                System.out.println("No se va a realizar ningun cambio");
+                            cliente = dni + " " + nombre + " " + apellidos + " " + fechaNacimiento;
+                            System.out.printf("%-15s %-15s %-20s %-20s\n",
+                                    dni, nombre, apellidos, fechaNacimiento);
+
+                            System.out.println("\n------------------------------------------------------------------------------------------------\n");
+                            System.out.print("Seleccione que dato desea modificar: ");
+                            int op = entrada.nextInt();
+                            entrada.nextLine();
+                            switch (op) {
+                                // Cada menu se utiliza para introducir el valor nuevo al cliente
+                                case 1 ->
+                                    dni = GestionClientes.introducirDNI(entrada);
+                                case 2 ->
+                                    nombre = GestionClientes.introducirNombre(entrada);
+                                case 3 ->
+                                    apellido1 = GestionClientes.introducirApellido1(entrada);
+                                case 4 ->
+                                    apellido2 = GestionClientes.introducirApellido2(entrada);
+                                case 5 ->
+                                    fechaNacimiento = GestionClientes.introducirFecha(entrada);
+                                case 6 -> {
+                                    System.out.println("No se va a realizar ningun cambio");
+                                }
+                                default -> {
+                                    System.out.println("Opcion no valida, debe introducir una opcion de la lista");
+                                }
                             }
-                            default -> {
-                                System.out.println("Opcion no valida, debe introducir una opcion de la lista");
-                            }
+                            PreparedStatement stmtUpd = conexion.prepareStatement("UPDATE clientes SET dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, fecha = ? WHERE dni = ?");
+                            stmtUpd.setString(1, dni);
+                            stmtUpd.setString(2, nombre);
+                            stmtUpd.setString(3, apellido1);
+                            stmtUpd.setString(4, apellido2);
+                            stmtUpd.setString(5, fechaNacimiento);
+                            stmtUpd.setString(6, dniViejo);
+                            int update = stmtUpd.executeUpdate();
+                            System.out.println((update == 0) ? "No se ha podido modificar el cliente" : "Se ha modifcado el cliente correctamente");
                         }
-                        stmt.setString(6, resultado.getString(1));
-                        boolean update = stmt.execute();
-                        System.out.println((update) ? "No se ha podido modificar el cliente" : "Se ha modifcado el cliente correctamente");
                     } else {
                         System.out.println("El cliente con ese DNI no existe.");
                     }
+
                 } catch (SQLException e) {
                     System.out.println("Error en la consulta: " + e.getMessage());
                 }

@@ -104,7 +104,7 @@ public class Bingo {
                                 systemPause();
                             }
                             case 3 -> {
-                                GestionClientes.modificarcliente();  // Modificar cliente
+                                Database.SQLModificarCliente();  // Modificar cliente
                                 systemPause();
                             }
                             case 4 -> {
